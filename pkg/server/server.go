@@ -15,12 +15,14 @@ const webDir = "./web"
 func StartServer() {
 	port := tests.GetPort()
 
-	password := os.Getenv("TODO_PASSWORD")
-	if password != "" {
-		log.Println("Аутентификация включена")
-	} else {
-		log.Println("Аутентификация отключена (TODO_PASSWORD не установлен)")
-	}
+	//password здесь для вывода лога. Был сделан для проверки что работает аутентификация,
+	//и было принято решение оставить как элемент дизайн
+	// password := os.Getenv("TODO_PASSWORD")
+	// if password != "" {
+	// 	log.Println("Аутентификация включена")
+	// } else {
+	// 	log.Println("Аутентификация отключена (TODO_PASSWORD не установлен)")
+	// }
 
 	if err := api.Init(); err != nil {
 		log.Fatal("Failed to initialize API:", err)

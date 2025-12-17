@@ -10,7 +10,7 @@ import (
 
 // UpdateTaskRequest структура для запроса обновления задачи
 type UpdateTaskRequest struct {
-	ID      string `json:"id"`
+	ID      string `json:"id,omitempty"`
 	Date    string `json:"date"`
 	Title   string `json:"title"`
 	Comment string `json:"comment"`

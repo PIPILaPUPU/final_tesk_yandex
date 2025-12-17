@@ -62,7 +62,9 @@ func GetPort() int {
 
 Без пароля TODO_PASSWORD="" go run main.go
 
-При запуске с докера использовались следующие теги
+При запуске с докера использовались следующие теги(измененные)
+
+В TODO_PORT можно указать люой другой порт, главное изменить и тега -p
 
 >>>>>>> 800b8df59af295f2876a397193ca36308e281f3a
-docker run -p 7540:7540 todo-app:latest
+docker run -p 7540:7540 -e TODO_PORT=7540 todo-app:latest

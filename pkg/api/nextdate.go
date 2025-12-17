@@ -55,6 +55,11 @@ func NextDate(now time.Time, date time.Time, rule string) (time.Time, bool, erro
 }
 
 func nextDateHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		writeJSON(w, map[string]string{"error": "Ошибка разбора формы"}, http.StatusBadRequest)
+		return
+	}
+
 	nowStr := r.FormValue("now")
 	dateStr := r.FormValue("date")
 	rule := r.FormValue("repeat")
@@ -67,7 +72,7 @@ func nextDateHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		now, err = time.Parse(DateFormat, nowStr)
 		if err != nil {
-			fmt.Fprint(w, "")
+			fmt.Fprint(w, err.Error())
 			return
 		}
 	}
@@ -79,13 +84,13 @@ func nextDateHandler(w http.ResponseWriter, r *http.Request) {
 
 	date, err := time.Parse(DateFormat, dateStr)
 	if err != nil {
-		fmt.Fprint(w, "")
+		fmt.Fprint(w, err.Error())
 		return
 	}
 
 	next, deleteTask, err := NextDate(now, date, rule)
 	if err != nil {
-		fmt.Fprint(w, "")
+		fmt.Fprint(w, err.Error())
 		return
 	}
 
@@ -94,5 +99,9 @@ func nextDateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprint(w, next.Format(DateFormat))
+	_, err = fmt.Fprint(w, next.Format(DateFormat))
+	if err != nil {
+		fmt.Fprint(w, err.Error())
+		return
+	}
 }

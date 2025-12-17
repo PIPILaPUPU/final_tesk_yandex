@@ -7,6 +7,8 @@ import (
 	database "github.com/PIPILaPUPU/finalTest/pkg/db"
 )
 
+const taskLimit = 50
+
 type TasksResponse struct {
 	Tasks []*database.Task `json:"tasks"`
 	Error string           `json:"error,omitempty"`
@@ -39,7 +41,7 @@ func returnTasksHandler(w http.ResponseWriter, r *http.Request) {
 	search := r.URL.Query().Get("search")
 
 	// Ограничение количества задач (по умолчанию 50)
-	limit := 50
+	limit := taskLimit
 	limitStr := r.URL.Query().Get("limit")
 	if limitStr != "" {
 		if l, err := strconv.Atoi(limitStr); err == nil && l > 0 {
